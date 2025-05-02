@@ -1,5 +1,6 @@
-import * as THREE from 'https://unpkg.com/three@0.155.0/build/three.module.js';
-import { OrbitControls } from 'https://unpkg.com/three@0.155.0/examples/jsm/controls/OrbitControls.js';
+import * as THREE from 'three';
+  import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+
 import gsap from 'https://cdn.jsdelivr.net/npm/gsap@3.12.2/index.js';
 import { NODES } from './nodes.js';
 
