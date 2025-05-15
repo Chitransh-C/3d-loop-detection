@@ -125,7 +125,7 @@ function addNode(address) {
     nodes.push(newNode);
     nodesByAddress[address] = newNode;
     addressToNode[address] = newNode;
-
+document.getElementById("nodeAddress").value="";
     // Connect to the previous node
     if (nodes.length > 1) {
         const lastNode = nodes[nodes.length - 2];
