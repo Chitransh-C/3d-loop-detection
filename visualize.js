@@ -294,4 +294,42 @@ function highlightNode(node) {
     group.add(highlight);
 }
 
+document.getElementById("resetBtn").addEventListener("click", () => {
+    resetSimulation();
+});
+function resetSimulation() {
+    // Remove all cylinders (connections), spheres, and labels
+    while (group.children.length > 0) {
+        group.remove(group.children[0]);
+    }
+
+    // Hide and reset tortoise/hare trails with a dummy point
+    const dummyPoint = new THREE.Vector3(0, 0, 0);
+
+    tortoisePositions = [];
+    harePositions = [];
+
+    // Rebuild trail lines with 1 dummy point to avoid WebGL warnings
+    tortoiseTrail = createTrailLine(0x00ff00);
+    hareTrail = createTrailLine(0xff00ff);
+    tortoiseTrail.geometry.setFromPoints([dummyPoint]);
+    hareTrail.geometry.setFromPoints([dummyPoint]);
+    tortoiseTrail.visible = false;
+    hareTrail.visible = false;
+
+    // Recreate markers (spheres) and hide them
+    tortoiseMarker = createMarker(0x00ff00);
+    hareMarker = createMarker(0xff00ff);
+    tortoiseMarker.visible = false;
+    hareMarker.visible = false;
+
+    // Clear data structures
+    nodes.length = 0;
+    labels.length = 0;
+    connections.length = 0;
+    Object.keys(nodesByAddress).forEach(k => delete nodesByAddress[k]);
+    Object.keys(addressToNode).forEach(k => delete addressToNode[k]);
+
+    alert("Simulation has been reset.");
+}
 
