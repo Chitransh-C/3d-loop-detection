@@ -298,32 +298,37 @@ document.getElementById("resetBtn").addEventListener("click", () => {
     resetSimulation();
 });
 function resetSimulation() {
-    // Remove all cylinders (connections), spheres, and labels
+    // Remove all children from group (nodes, labels, connections)
     while (group.children.length > 0) {
         group.remove(group.children[0]);
     }
 
-    // Hide and reset tortoise/hare trails with a dummy point
-    const dummyPoint = new THREE.Vector3(0, 0, 0);
+    // Remove old trail lines from scene
+    if (tortoiseTrail) scene.remove(tortoiseTrail);
+    if (hareTrail) scene.remove(hareTrail);
 
+    // Remove old markers from group
+    if (tortoiseMarker) group.remove(tortoiseMarker);
+    if (hareMarker) group.remove(hareMarker);
+
+    // Reset trail arrays
     tortoisePositions = [];
     harePositions = [];
 
-    // Rebuild trail lines with 1 dummy point to avoid WebGL warnings
+    // Create new trail lines and markers
     tortoiseTrail = createTrailLine(0x00ff00);
     hareTrail = createTrailLine(0xff00ff);
-    tortoiseTrail.geometry.setFromPoints([dummyPoint]);
-    hareTrail.geometry.setFromPoints([dummyPoint]);
+    tortoiseTrail.geometry.setFromPoints([new THREE.Vector3(0, 0, 0)]);
+    hareTrail.geometry.setFromPoints([new THREE.Vector3(0, 0, 0)]);
     tortoiseTrail.visible = false;
     hareTrail.visible = false;
 
-    // Recreate markers (spheres) and hide them
     tortoiseMarker = createMarker(0x00ff00);
     hareMarker = createMarker(0xff00ff);
     tortoiseMarker.visible = false;
     hareMarker.visible = false;
 
-    // Clear data structures
+    // Clear internal data
     nodes.length = 0;
     labels.length = 0;
     connections.length = 0;
@@ -332,4 +337,3 @@ function resetSimulation() {
 
     alert("Simulation has been reset.");
 }
-
